@@ -1,0 +1,42 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.21.RELEASE'
+	}
+}
+
+plugins {
+	id 'java'
+}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'pmd'
+
+group = 'com.ai'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile 'org.springframework.boot:spring-boot-starter'
+	testCompile 'org.springframework.boot:spring-boot-starter-test'
+}
+
+pmd {
+	ignoreFailures = false
+	sourceSets = [sourceSets.main]
+	reportsDir = file("$project.buildDir/reports/pmd")
+	ruleSets = [
+			"java-basic",
+			"java-braces",
+			"java-imports",
+	]
+}
+
+apply from: 'gradle/dependencies.gradle'
+apply from: 'gradle/source.gradle'

@@ -1,0 +1,24 @@
+sourceSets {
+    unitTest {
+        java {
+            srcDir 'src/test/unitTest/java/dev'
+        }
+        resources {
+            srcDir 'src/test/unitTest/resources'
+        }
+        compileClasspath += sourceSets.main.runtimeClasspath
+        compileClasspath += sourceSets.test.compileClasspath
+        runtimeClasspath = output + compileClasspath
+    }
+}
+
+task unitTest(type: Test){
+    description = "Runs Unit Tests"
+    testClassesDir = sourceSets.unitTest.output.classesDir
+    classpath = sourceSets.unitTest.runtimeClasspath
+    configure {
+        systemProperties = [
+                'spring.profiles.active': 'dev'
+        ]
+    }
+}
